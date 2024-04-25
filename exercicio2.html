@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>exercicio2</title>
+</head>
+<body>
+
+<script>
+var numero = parseInt(prompt("Por favor,digite um número inteiro positivo:"));
+
+if (numero <= 1 || isNaN(numero)) {
+    alert("Por favor, digite um número inteiro positivo válido.");
+} else {
+    var ehPrimo = true;
+
+    // Verifica se o número é primo
+    for (var i = 2; i <= Math.sqrt(numero); i++) {
+        if (numero % i === 0) {
+            ehPrimo = false;
+            break;
+        }
+    }
+
+    // Exibe o resultado
+    if (ehPrimo) {
+        alert(numero + " é um número primo.");
+    } else {
+        alert(numero + " não é um número primo.");
+    }
+}
+</script>
+
+</body>
+</html>

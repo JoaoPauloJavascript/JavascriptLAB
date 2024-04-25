@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>array dinâmico</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    form {
+        margin-bottom: 20px;
+    }
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    li {
+        margin-bottom: 5px;
+    }
+</style>
+</head>
+<body>
+    <!-- Formulário para inserir filmes -->
+    <form id="inputForm">
+        <label for="inputValue">Por favor Digite o filme a ser cadastrado:</label>
+        <input type="text" id="inputValue" required>
+        <button type="submit">Adicionar</button>
+    </form>
+
+    <!-- Lista ordenada para exibir os filmes cadastrados -->
+    <h2>Filmes:</h2>
+    <ol id="movieList"></ol>
+
+    <!-- Script JavaScript -->
+    <script>
+        // Capturando elementos do DOM
+        const form = document.getElementById('inputForm');
+        const input = document.getElementById('inputValue');
+        const list = document.getElementById('movieList');
+        let movies = []; // Array para armazenar os filmes
+
+        // Adicionando um evento de "submit" ao formulário
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Impedindo o comportamento padrão do formulário
+
+            // Capturando e limpando o valor inserido pelo usuário
+            const movie = input.value.trim();
+
+            // Verificando se o valor não está NULO e se não foi previamente inserido
+            if (movie !== '' && !movies.includes(movie)) {
+                movies.push(movie); // Adicionando o filme ao array
+                movies.sort(); // Ordenando em ordem alfabética
+                renderList(); // Renderizando a lista atualizada na página
+                input.value = ''; // Limpando a entrada
+            } else {
+                alert('este filme ja existe.'); // Exibindo um alerta se o filme já existir
+            }
+        });
+
+        // Função que renderiza a lista na página HTML
+        function renderList() {
+            list.innerHTML = ''; // Limpando a lista
+
+            // Iterando sobre os filmes no array e criando os itens da lista
+            movies.forEach(function(movie) {
+                const listItem = document.createElement('li');
+                listItem.textContent = movie;
+                list.appendChild(listItem);
+            });
+        }
+    </script>
+</body>
+</html>

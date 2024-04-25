@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>exercicio4</title>
+</head>
+<body>
+    <script>
+        // Solicita entrada de dados ao usuário
+        var dado = prompt("Por favor digite um dado:");
+
+        // Verifica se o usuário deseja verificar o tipo do dado
+        var verificarTipo = confirm("Deseja verificar o tipo do dado informado?");
+
+        if (verificarTipo) {
+            // Verifica o tipo do dado
+            var tipoDado = typeof dado;
+
+            // Escreve o tipo do dado no corpo da página
+            document.write("<h2>O tipo do dado informado é: " + tipoDado + "</h2>");
+        } else {
+            // Caso contrário, escreve uma mensagem
+            document.write("<h2>Obrigado por visitar esta página</h2>");
+        }
+    </script>
+</body>
+</html>

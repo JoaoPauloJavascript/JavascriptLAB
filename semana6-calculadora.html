@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora</title>
+<style>
+    body {
+        background-color: gray;
+        color: white;
+    }
+
+    #calculator {
+        width: 300px;
+        margin: 0 auto;
+        border: 2px solid #ccc;
+        border-radius: 10px;
+        padding: 10px;
+        background-color: black;
+    }
+
+    #display {
+        width: calc(100% - 20px);
+        margin-bottom: 10px;
+        font-size: 18px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        color: white;
+        background-color: black;
+    }
+
+    button {
+        width: 60px;
+        height: 60px;
+        margin: 5px;
+        font-size: 20px;
+        border: 1px solid red;
+        border-radius: 5px;
+        background-color: red;
+        color: black;
+        cursor: pointer;
+    }
+
+    button:active {
+        background-color: darkred;
+    }
+
+    .operator-button.active {
+        background-color: darkred;
+    }
+</style>
+</head>
+<body>
+
+<div id="calculator"></div>
+
+<script>
+    const calculator = document.getElementById('calculator');
+
+    const display = document.createElement('input');
+    display.id = 'display';
+    display.type = 'text';
+    display.disabled = true;
+    display.style.width = 'calc(100% - 20px)';
+    display.style.marginBottom = '10px';
+    display.style.fontSize = '18px';
+    display.style.padding = '5px';
+    display.style.border = '1px solid #ccc';
+    display.style.borderRadius = '5px';
+    display.style.color = 'white';
+    display.style.backgroundColor = 'black';
+    calculator.appendChild(display);
+
+    const buttons = [
+        '7', '8', '9', '/',
+        '4', '5', '6', '*',
+        '1', '2', '3', '-',
+        '0', '.', '=', '+',
+        'C'
+    ];
+
+    buttons.forEach(buttonText => {
+        const button = document.createElement('button');
+        button.textContent = buttonText;
+        button.className = isNaN(parseFloat(buttonText)) ? 'operator-button' : 'number-button';
+        button.style.width = '60px';
+        button.style.height = '60px';
+        button.style.margin = '5px';
+        button.style.fontSize = '20px';
+        button.style.border = '1px solid red';
+        button.style.borderRadius = '5px';
+        button.style.backgroundColor = 'red';
+        button.style.color = 'black';
+        button.style.cursor = 'pointer';
+        button.addEventListener('click', () => {
+            if (button.classList.contains('operator-button')) {
+                document.querySelectorAll('.operator-button').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+            }
+            handleButtonPress(button.textContent);
+        });
+        calculator.appendChild(button);
+    });
+
+    let memoryValue = 0;
+
+    function handleButtonPress(value) {
+        const display = document.getElementById('display');
+        switch (value) {
+            case 'C':
+                clearDisplay();
+                break;
+            case '=':
+                calculate();
+                break;
+            case '.':
+                appendDecimal();
+                break;
+            default:
+                if (!isNaN(value) || value === '.') {
+                    appendValue(value);
+                } else {
+                    appendOperator(value);
+                }
+                break;
+        }
+    }
+
+    function appendValue(value) {
+        const display = document.getElementById('display');
+        const lastChar = display.value[display.value.length - 1];
+        if (isNaN(value) && isNaN(lastChar)) return;
+        if (display.value === 'Erro') clearDisplay();
+        display.value += value;
+    }
+
+    function appendDecimal() {
+        const display = document.getElementById('display');
+        if (display.value === '' || isNaN(display.value[display.value.length - 1])) {
+            display.value += '0.';
+        } else if (!display.value.includes('.')) {
+            display.value += '.';
+        }
+    }
+
+    function appendOperator(operator) {
+        const display = document.getElementById('display');
+        const lastChar = display.value[display.value.length - 1];
+        if (!isNaN(lastChar) || operator === '-') {
+            if (display.value === 'Erro') clearDisplay();
+            display.value += operator;
+        }
+    }
+
+    function calculate() {
+        const display = document.getElementById('display');
+        try {
+            const result = eval(display.value);
+            if (result === Infinity || isNaN(result)) {
+                display.value = 'Erro';
+            } else {
+                display.value = result;
+            }
+        } catch (error) {
+            display.value = 'Erro';
+        }
+    }
+
+    function clearDisplay() {
+        document.getElementById('display').value = '';
+    }
+</script>
+
+</body>
+</html>

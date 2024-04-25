@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulário De Cadastro</title>
+<link rel="stylesheet" type="text/css" href="meucss.css">
+</head>
+<body>
+
+<h1>Formulário De Cadastro</h1>
+
+<form id="form">
+  <label for="nome">Nome:</label>
+    <input type="text" id="nome" required pattern="[A-Za-z ]+$">
+    <br><br>
+    
+    <label for="email">Email:</label>
+    <input name="email" type="email" id="email" required>
+    <label for="data_nascimento">Data de Nascimento:</label>
+    <input name="Data_nas" type="date" id="data_nascimento" required>
+    <br><br>
+
+    
+  <div class="telefone-container">
+    <label for="telefone_fixo">Telefone Fixo:</label>
+        <input name="telfix" type="tel" id="telefone_fixo" required pattern="[0-9]+$">
+    <label for="telefone_celular">Telefone Celular:</label>
+        <input name="cel" type="tel" id="telefone_celular" required pattern="[0-9]+$">
+    <div align="justify" class="checkbox-label"></div>
+  </div>
+    <div>
+    <div align="justify"></div>
+  </div>
+  </label>
+    <div align="left"><br>
+        <br>
+      
+    </div>
+    <div>
+    <input type="checkbox" id="aluno" name="tipo" value="aluno">
+    <label for="aluno">Aluno</label>
+</div>
+<div>
+    <input type="checkbox" id="professor" name="tipo" value="professor">
+    <label for="professor">Professor</label>
+</div>
+
+<div id="aluno_fields" class="hidden">
+    <label for="curso">Curso:</label>
+    <input type="text" id="curso"><br><br>
+    
+    <label for="matricula">Matrícula:</label>
+    <input type="text" id="matricula"><br><br>
+</div>
+
+<div id="professor_fields" class="hidden">
+    <label for="area">Área:</label>
+    <input type="text" id="area"><br><br>
+    
+    <label for="matricula_prof">Matrícula:</label>
+    <input type="text" id="matricula_prof"><br><br>
+    
+    <label for="lattes">Lattes:</label>
+    <input type="text" id="lattes"><br><br>
+</div>
+    
+    <input type="submit" value="Enviar">
+    <input name="Reset" type="reset" value="Redefinir">
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Configurar idioma do Datepicker p/BR
+        $("#data_nascimento").attr("lang", "pt-BR");
+        
+        $("#aluno").change(function() {
+            if ($(this).is(":checked")) {
+                $("#aluno_fields").removeClass("hidden");
+            } else {
+                $("#aluno_fields").addClass("hidden");
+            }
+        });
+        
+        $("#professor").change(function() {
+            if ($(this).is(":checked")) {
+                $("#professor_fields").removeClass("hidden");
+            } else {
+                $("#professor_fields").addClass("hidden");
+            }
+        });
+        
+        $("#form").submit(function(event) {
+            event.preventDefault();
+            
+            // Recuperando valores do formulário
+            let nome = $("#nome").val();
+            let email = $("#email").val();
+            let dataNascimento = $("#data_nascimento").val();
+            let telefoneFixo = $("#telefone_fixo").val();
+            let telefoneCelular = $("#telefone_celular").val();
+            let curso = $("#curso").val();
+            let matricula = $("#matricula").val();
+            let area = $("#area").val();
+            let matriculaProf = $("#matricula_prof").val();
+            let lattes = $("#lattes").val();
+            
+            // Verificando se é Aluno, Professor ou ambos
+            let aluno = $("#aluno").is(":checked");
+            let professor = $("#professor").is(":checked");
+            
+            // Criando objeto Aluno ou Professor conforme necessário
+            if (aluno && professor) {
+                alert("Uma pessoa não pode ser aluno e professor ao mesmo tempo!");
+            } else if (aluno) {
+                let alunoObj = {
+                    nome: nome,
+                    email: email,
+                    dataNascimento: dataNascimento,
+                    telefoneFixo: telefoneFixo,
+                    telefoneCelular: telefoneCelular,
+                    curso: curso,
+                    matricula: matricula
+                };
+                console.log(alunoObj);
+                
+            } else if (professor) {
+                let professorObj = {
+                    nome: nome,
+                    email: email,
+                    dataNascimento: dataNascimento,
+                    telefoneFixo: telefoneFixo,
+                    telefoneCelular: telefoneCelular,
+                    area: area,
+                    matriculaProf: matriculaProf,
+                    lattes: lattes
+                };
+                console.log(professorObj);
+            } else {
+                alert("Selecione se você é aluno ou professor.");
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>execicio3-semana3-Verificador de Palíndromo</title>
+</head>
+<body>
+    <label for="texto">Por favor Digite uma palavra ou frase:</label><br>
+    <input type="text" id="texto"><br>
+    <button onclick="verificarPalindromo()">Verificar</button>
+
+    <script>
+        function verificarPalindromo() {
+            // Obter o texto digitado pelo usuário
+            var texto = document.getElementById('texto').value;
+
+            // Remover espaços em branco e converter para letras minúsculas
+            texto = texto.replace(/\s/g, '').toLowerCase();
+
+            // Inverter o texto
+            var textoInvertido = texto.split('').reverse().join('');
+
+            // Verificar se o texto original é igual ao texto invertido
+            if (texto === textoInvertido) {
+                alert('O texto digitado é um palíndromo!');
+            } else {
+                alert('O texto digitado NÃO é um palíndromo.');
+            }
+        }
+    </script>
+</body>
+</html>

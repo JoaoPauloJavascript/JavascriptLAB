@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador de Gênero</title>
+</head>
+<body>
+<script>
+    // Espera até que o DOM esteja completamente carregado
+    document.addEventListener('DOMContentLoaded', function () {
+        // Variáveis para contar o número de homens e mulheres
+        let maleCount = 0;
+        let femaleCount = 0;
+
+        // Cria um contêiner para os elementos
+        const container = document.createElement('div');
+        container.classList.add('counter');
+        container.style.border = '8px solid #ccc';
+        container.style.padding = '7px';
+        container.style.width = '500px';
+        container.style.margin = 'auto';
+        container.style.marginTop = '40px';
+        container.style.borderRadius = '15px';
+        container.style.position = 'relative'; // Adicionando para o posicionamento do botão
+
+        // Função para criar a estrutura de elementos para cada gênero
+        function createPersonDiv(imgSrc, altText, countId, addFunction, removeFunction) {
+            const div = document.createElement('div'); // Cria uma div para o gênero
+            div.classList.add('person');
+            div.style.textAlign = 'center';
+            div.style.marginBottom = '0px';
+
+            const img = document.createElement('img'); // Cria uma imagem para representar o gênero
+            img.src = imgSrc;
+            img.alt = altText;
+            img.style.width = '210px';
+            img.style.height = '210px';
+            img.style.marginBottom = '0px';
+            img.style.margin = '5px';
+
+            const addButton = document.createElement('button'); // Botão para adicionar um gênero
+            addButton.innerHTML = '+';
+            addButton.style.padding = '7px 10px';
+            addButton.style.cursor = 'pointer';
+            addButton.style.marginRight = '7px';
+            addButton.addEventListener('click', addFunction);
+
+            const removeButton = document.createElement('button'); // Botão para remover um gênero
+            removeButton.innerHTML = '-';
+            removeButton.style.padding = '7px 10px';
+            removeButton.style.cursor = 'pointer';
+            removeButton.style.marginRight = '7px';
+            removeButton.addEventListener('click', removeFunction);
+
+            const countSpan = document.createElement('span'); // Elemento para mostrar a contagem do gênero
+            countSpan.id = countId;
+            countSpan.innerHTML = '0';
+
+            div.appendChild(img);
+            div.appendChild(addButton);
+            div.appendChild(removeButton);
+            div.appendChild(countSpan);
+
+            return div;
+        }
+
+        // Funções para adicionar e remover homens
+        function addMale() {
+            maleCount++;
+            updateCounts();
+        }
+
+        function removeMale() {
+            if (maleCount > 0) {
+                maleCount--;
+                updateCounts();
+            }
+        }
+
+        // Funções para adicionar e remover mulheres
+        function addFemale() {
+            femaleCount++;
+            updateCounts();
+        }
+
+        function removeFemale() {
+            if (femaleCount > 0) {
+                femaleCount--;
+                updateCounts();
+            }
+        }
+
+        // Função para atualizar as contagens na interface
+        function updateCounts() {
+            const maleCountDisplay = document.getElementById('maleCount');
+            const femaleCountDisplay = document.getElementById('femaleCount');
+            const totalCountDisplay = document.getElementById('totalCount');
+
+            maleCountDisplay.textContent = maleCount;
+            femaleCountDisplay.textContent = femaleCount;
+            totalCountDisplay.textContent = maleCount + femaleCount;
+        }
+
+        // Cria os elementos para representar homens e mulheres
+        const maleDiv = createPersonDiv('male.png', 'Masculino', 'maleCount', addMale, removeMale);
+        const femaleDiv = createPersonDiv('female.png', 'Feminino', 'femaleCount', addFemale, removeFemale);
+
+        // Cria um contêiner para os elementos de gênero
+        const personsContainer = document.createElement('div');
+        personsContainer.classList.add('person-container');
+        personsContainer.style.display = 'flex';
+        personsContainer.style.justifyContent = 'space-between';
+        personsContainer.style.alignItems = 'center';
+        personsContainer.style.marginBottom = '10px';
+
+        // Adiciona os elementos de gênero ao contêiner de gênero
+        personsContainer.appendChild(maleDiv);
+        personsContainer.appendChild(femaleDiv);
+
+        // Cria um elemento para mostrar o total
+        const totalCountDisplay = document.createElement('h3');
+        totalCountDisplay.innerHTML = 'Total: <span id="totalCount">0</span>';
+
+        // Adiciona todos os elementos ao contêiner principal
+        container.appendChild(personsContainer);
+        container.appendChild(totalCountDisplay);
+        document.body.appendChild(container);
+
+        // Botão de Refresh
+        const refreshBtn = document.createElement('button');
+        refreshBtn.innerHTML = '&#8635;';
+        refreshBtn.style.position = 'absolute';
+        refreshBtn.style.top = '10px';
+        refreshBtn.style.right = '10px';
+        refreshBtn.addEventListener('click', function() {
+            location.reload(); // Atualiza a página quando o botão é clicado
+        });
+
+        container.appendChild(refreshBtn); // Adicionando o botão dentro do contêiner
+
+    });
+</script>
+
+</body>
+</html>

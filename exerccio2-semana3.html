@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>exercicio2-semana3-Relógio</title>
+<script>
+    function atualizarRelogio() {
+        // Obter a hora atual
+        var dataAtual = new Date();
+
+        // Extrair as horas, minutos e segundos
+        var horas = dataAtual.getHours();
+        var minutos = dataAtual.getMinutes();
+        var segundos = dataAtual.getSeconds();
+
+        // Adicionar um zero à esquerda se os minutos ou segundos forem menores que 10
+        minutos = minutos < 10 ? '0' + minutos : minutos;
+        segundos = segundos < 10 ? '0' + segundos : segundos;
+
+        // Formatar a hora
+        var horaFormatada = horas + ':' + minutos + ':' + segundos;
+
+        // Atualizar o elemento HTML com a hora formatada
+        document.getElementById('relogio').innerText = horaFormatada;
+
+        // Chamar esta função novamente após 1 segundo
+        setTimeout(atualizarRelogio, 1000);
+    }
+
+    // Chamada da função ao carregar a página
+    window.onload = function() {
+        atualizarRelogio();
+    };
+</script>
+</head>
+<body>
+    <h1>Relógio</h1>
+    <p id="relogio"></p>
+</body>
+</html>
